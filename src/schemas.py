@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from src.models import DangerLevel, DeliveryStatus, UserRole
+
 
 class UserCreate(BaseModel):
     username: str
@@ -24,7 +26,7 @@ class UserUpdate(BaseModel):
 class UserResponse(BaseModel):
     id: int
     username: str
-    role: str = "user"
+    role: str = UserRole.USER.value
     is_admin: bool = False
     full_name: Optional[str] = None
 
@@ -43,7 +45,7 @@ class DeliveryCreate(BaseModel):
     target_lat: float
     target_lon: float
     prey_type: str  # Наприклад: "Brain", "Meat", "Plasma", "Supplies"
-    danger_level: Optional[str] = "MEDIUM"  # LOW, MEDIUM, HIGH, NIGHTMARE
+    danger_level: Optional[str] = DangerLevel.MEDIUM.value
     notes: Optional[str] = None
 
 
@@ -67,7 +69,7 @@ class DeliveryResponse(BaseModel):
     target_lon: float
     prey_type: str
     danger_level: str
-    status: str
+    status: str = DeliveryStatus.PENDING.value
     reward_brains: int
     notes: Optional[str] = None
     owner_id: int

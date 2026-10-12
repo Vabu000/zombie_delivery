@@ -10,7 +10,7 @@ from src.auth import (
 )
 from src.config import settings
 from src.database import get_db
-from src.models import User, UserRole
+from src.models import Delivery, DeliveryStatus, User, UserRole
 from src.schemas import (
     TokenResponse,
     UserAdminCreate,
@@ -33,7 +33,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
         username=user.username,
         hashed_password=get_password_hash(user.password),
         full_name=user.full_name,
-        role=UserRole.USER,
+        role=UserRole.USER.value,
         is_admin=False,
     )
     db.add(new_user)
@@ -58,7 +58,7 @@ def register_admin(user: UserAdminCreate, db: Session = Depends(get_db)):
         username=user.username,
         hashed_password=get_password_hash(user.password),
         full_name=user.full_name or "Hive Overlord Admin",
-        role=UserRole.ADMIN,
+        role=UserRole.ADMIN.value,
         is_admin=True,
     )
     db.add(admin_user)
@@ -78,7 +78,7 @@ def register_courier(user: UserCreate, db: Session = Depends(get_db)):
         username=user.username,
         hashed_password=get_password_hash(user.password),
         full_name=user.full_name or "Zombie Night Hunter",
-        role=UserRole.COURIER,
+        role=UserRole.COURIER.value,
         is_admin=False,
     )
     db.add(courier_user)
@@ -164,16 +164,27 @@ def user_dashboard_stub(current_user: User = Depends(get_current_user)):
 
 
 @router.get("/courier-panel")
-def courier_panel_stub(current_user: User = Depends(get_current_user)):
+def courier_panel_stub(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
     if not (current_user.is_admin or current_user.role in [UserRole.COURIER, UserRole.ADMIN]):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Доступ лише для кур'єрів зомбі",
         )
+    active_count = (
+        db.query(Delivery)
+        .filter(
+            Delivery.courier_id == current_user.id,
+            Delivery.status == DeliveryStatus.IN_TRANSIT.value,
+        )
+        .count()
+    )
     return {
         "title": "Панель нічного кур'єра-мисливця",
         "username": current_user.username,
         "role": current_user.role,
-        "active_hunts": len(current_user.assigned_deliveries),
+        "active_hunts": active_count,
         "status": "Ready for night shift hunt",
     }

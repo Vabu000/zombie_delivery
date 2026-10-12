@@ -1,14 +1,19 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 from src.config import settings
 
 engine = create_engine(
     settings.DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {},
+    connect_args=({"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}),
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+
+
+class Base(DeclarativeBase):
+    """Сучасний базовий клас SQLAlchemy 2.0 для повної сумісності з IDE та статичними аналізаторами."""
+
+    pass
 
 
 def get_db():
