@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 720" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d13" />
+      <stop offset="100%" stop-color="#121820" />
+    </linearGradient>
+    <linearGradient id="clientGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="gatewayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#006644" />
+      <stop offset="100%" stop-color="#003d29" />
+    </linearGradient>
+    <linearGradient id="backendGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#005577" />
+      <stop offset="100%" stop-color="#002b3d" />
+    </linearGradient>
+    <linearGradient id="cacheGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#882233" />
+      <stop offset="100%" stop-color="#4d111c" />
+    </linearGradient>
+    <linearGradient id="dbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7a4400" />
+      <stop offset="100%" stop-color="#3d2200" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#00ff88" />
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#fb923c" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="720" fill="url(#bgGrad)" rx="16" />
+
+  <!-- Title & Header -->
+  <text x="550" y="45" font-family="Segoe UI, sans-serif" font-size="24" font-weight="bold" fill="#00ff88" text-anchor="middle" letter-spacing="1">
+    ZOMBIE NIGHT DELIVERY AGGREGATOR — SYSTEM ARCHITECTURE
+  </text>
+  <text x="550" y="70" font-family="Segoe UI, sans-serif" font-size="13" fill="#94a3b8" text-anchor="middle">
+    High-Availability Multi-Tier Architecture: Clients, Nginx Load Balancer, FastAPI Workers, Redis Cache &amp; Isolated Databases
+  </text>
+
+  <!-- LAYER 1: CLIENTS -->
+  <rect x="40" y="95" width="1020" height="110" rx="12" fill="#131b26" stroke="#253346" stroke-width="1.5" />
+  <text x="60" y="120" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" fill="#38bdf8" text-transform="uppercase">
+    1. Presentation Tier (Clients &amp; Interfaces)
+  </text>
+
+  <!-- Client 1 -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="132" width="280" height="60" rx="8" fill="url(#clientGrad)" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="90" y="157" font-family="Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">👤 Survivor Web App</text>
+    <text x="90" y="177" font-family="Segoe UI, sans-serif" font-size="11" fill="#94a3b8">Customer Orders &amp; Personal Dashboard</text>
+  </g>
+
+  <!-- Client 2 -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="132" width="280" height="60" rx="8" fill="url(#clientGrad)" stroke="#f59e0b" stroke-width="1.5" />
+    <text x="430" y="157" font-family="Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">🏍️ Zombie Courier Terminal</text>
+    <text x="430" y="177" font-family="Segoe UI, sans-serif" font-size="11" fill="#94a3b8">Hunt Dispatch &amp; Route Execution</text>
+  </g>
+
+  <!-- Client 3 -->
+  <g filter="url(#shadow)">
+    <rect x="750" y="132" width="280" height="60" rx="8" fill="url(#clientGrad)" stroke="#ef4444" stroke-width="1.5" />
+    <text x="770" y="157" font-family="Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">🧠 Overlord Admin Center</text>
+    <text x="770" y="177" font-family="Segoe UI, sans-serif" font-size="11" fill="#94a3b8">Global Threat Map &amp; User Control</text>
+  </g>
+
+  <!-- Connectors Clients -> Gateway -->
+  <path d="M 210 192 L 210 230 Q 210 240 230 240 L 450 240" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-blue)" />
+  <path d="M 550 192 L 550 235" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-blue)" />
+  <path d="M 890 192 L 890 230 Q 890 240 870 240 L 650 240" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-blue)" />
+
+  <!-- LAYER 2: GATEWAY & LOAD BALANCING -->
+  <g filter="url(#shadow)">
+    <rect x="250" y="240" width="600" height="75" rx="10" fill="url(#gatewayGrad)" stroke="#00ff88" stroke-width="2" />
+    <text x="550" y="268" font-family="Segoe UI, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">
+      🛡️ NGINX REVERSE PROXY &amp; LOAD BALANCER
+    </text>
+    <text x="550" y="293" font-family="Segoe UI, sans-serif" font-size="12" fill="#c7f9cc" text-anchor="middle">
+      SSL Termination • Upstream Round-Robin Balancing • DDoS Mitigation • Static File Serving
+    </text>
+  </g>
+
+  <!-- Connectors Gateway -> Backend Instances -->
+  <path d="M 380 315 L 380 340 Q 380 350 360 350 L 210 350 L 210 365" fill="none" stroke="#00ff88" stroke-width="2" marker-end="url(#arrow)" />
+  <path d="M 550 315 L 550 365" fill="none" stroke="#00ff88" stroke-width="2" marker-end="url(#arrow)" />
+  <path d="M 720 315 L 720 340 Q 720 350 740 350 L 890 350 L 890 365" fill="none" stroke="#00ff88" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- LAYER 3: APPLICATION TIER (FASTAPI CLUSTER) -->
+  <rect x="40" y="360" width="1020" height="155" rx="12" fill="#131b26" stroke="#253346" stroke-width="1.5" />
+  <text x="60" y="383" font-family="Segoe UI, sans-serif" font-size="12" font-weight="bold" fill="#00ff88" text-transform="uppercase">
+    2. Application Tier (FastAPI Async Worker Cluster)
+  </text>
+
+  <!-- Worker 1 -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="395" width="280" height="105" rx="8" fill="url(#backendGrad)" stroke="#0284c7" stroke-width="1.5" />
+    <text x="85" y="420" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">⚡ FastAPI Instance #1</text>
+    <text x="85" y="440" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• JWT RBAC (Admin/Courier/User)</text>
+    <text x="85" y="458" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• IDOR Attack Protection Logic</text>
+    <text x="85" y="476" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• Safe 500 Sanitizer (DEBUG=False)</text>
+  </g>
+
+  <!-- Worker 2 -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="395" width="280" height="105" rx="8" fill="url(#backendGrad)" stroke="#0284c7" stroke-width="1.5" />
+    <text x="425" y="420" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">⚡ FastAPI Instance #2</text>
+    <text x="425" y="440" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• Pydantic v2 Schema Validation</text>
+    <text x="425" y="458" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• Route Danger &amp; Reward Calc</text>
+    <text x="425" y="476" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• Asynchronous Uvicorn Loop</text>
+  </g>
+
+  <!-- Worker N -->
+  <g filter="url(#shadow)">
+    <rect x="750" y="395" width="280" height="105" rx="8" fill="url(#backendGrad)" stroke="#0284c7" stroke-width="1.5" />
+    <text x="765" y="420" font-family="Segoe UI, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">⚡ FastAPI Instance #N</text>
+    <text x="765" y="440" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• Horizontal Scaled Workers</text>
+    <text x="765" y="458" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• SQLAlchemy ORM Connection</text>
+    <text x="765" y="476" font-family="Segoe UI, sans-serif" font-size="11" fill="#bae6fd">• Swagger / OpenAPI Auto-docs</text>
+  </g>
+
+  <!-- Connectors Backend -> Cache & DB -->
+  <path d="M 210 500 L 210 545" fill="none" stroke="#fb923c" stroke-width="2" marker-end="url(#arrow-orange)" />
+  <path d="M 550 500 L 550 545" fill="none" stroke="#ef4444" stroke-width="2" />
+  <path d="M 890 500 L 890 545" fill="none" stroke="#fb923c" stroke-width="2" marker-end="url(#arrow-orange)" />
+
+  <!-- LAYER 4: CACHE & DATA ISOLATION -->
+  <!-- Redis Cache Box -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="555" width="300" height="130" rx="10" fill="url(#cacheGrad)" stroke="#f43f5e" stroke-width="1.5" />
+    <text x="90" y="583" font-family="Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">🟥 REDIS IN-MEMORY CACHE</text>
+    <text x="90" y="605" font-family="Segoe UI, sans-serif" font-size="11" fill="#fecdd3">• Fast Pending Delivery Pool Cache</text>
+    <text x="90" y="623" font-family="Segoe UI, sans-serif" font-size="11" fill="#fecdd3">• Rate Limiting (Brute-Force Guard)</text>
+    <text x="90" y="641" font-family="Segoe UI, sans-serif" font-size="11" fill="#fecdd3">• Distributed Locks on Claim Orders</text>
+    <text x="90" y="659" font-family="Segoe UI, sans-serif" font-size="11" fill="#fecdd3">• High Throughput Session Store</text>
+  </g>
+
+  <!-- Production Database Box -->
+  <g filter="url(#shadow)">
+    <rect x="410" y="555" width="300" height="130" rx="10" fill="url(#dbGrad)" stroke="#f59e0b" stroke-width="2" />
+    <text x="430" y="583" font-family="Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#ffffff">🗄️ PRODUCTION DATABASE</text>
+    <text x="430" y="605" font-family="Segoe UI, sans-serif" font-size="11" fill="#fde68a">• PostgreSQL / production.db</text>
+    <text x="430" y="623" font-family="Segoe UI, sans-serif" font-size="11" fill="#fde68a">• DEBUG = False (Hardened Security)</text>
+    <text x="430" y="641" font-family="Segoe UI, sans-serif" font-size="11" fill="#fde68a">• Real Survivor Orders &amp; Users</text>
+    <text x="430" y="659" font-family="Segoe UI, sans-serif" font-size="11" fill="#fde68a">• Strict ACID &amp; Foreign Key Constraints</text>
+  </g>
+
+  <!-- Sandbox / Test Database Box -->
+  <g filter="url(#shadow)">
+    <rect x="750" y="555" width="280" height="130" rx="10" fill="#1e293b" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6,4" />
+    <text x="770" y="583" font-family="Segoe UI, sans-serif" font-size="15" font-weight="bold" fill="#94a3b8">🧪 SANDBOX / TEST DB</text>
+    <text x="770" y="605" font-family="Segoe UI, sans-serif" font-size="11" fill="#cbd5e1">• SQLite (sandbox.db / :memory:)</text>
+    <text x="770" y="623" font-family="Segoe UI, sans-serif" font-size="11" fill="#cbd5e1">• DEBUG = True (Development)</text>
+    <text x="770" y="641" font-family="Segoe UI, sans-serif" font-size="11" fill="#cbd5e1">• Automated Pytest Isolated Fixtures</text>
+    <text x="770" y="659" font-family="Segoe UI, sans-serif" font-size="11" fill="#cbd5e1">• 100% Data Isolation from Production</text>
+  </g>
+
+</svg>
